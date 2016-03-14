@@ -5,6 +5,7 @@ import (
 	"log"
 	"regexp"
 
+	"github.com/stellar/federation/db"
 	"github.com/stellar/go-stellar-base/keypair"
 )
 
@@ -35,7 +36,7 @@ if err != nil {
 
 ////////////////////////// for tip bot ////////////////////
 // TODO: Check if github name exists before creating a federated name for it
-func (rh *RequestHandler) createAccount(name string, record *FedRecord) bool {
+func (rh *RequestHandler) createAccount(name string, record *db.FederationRecord) bool {
 
 	log.Println("Creating a new account: " + name)
 	pattern := "^[a-zA-Z0-9](?:-?[a-zA-Z0-9]){0,38}$"
@@ -55,7 +56,7 @@ func (rh *RequestHandler) createAccount(name string, record *FedRecord) bool {
 
 	//log.Println(sql)
 
-	_, err = rh.database.Exec(sql)
+	_, err = rh.driver.Exec(sql)
 	if err != nil {
 		log.Println(err)
 		return false

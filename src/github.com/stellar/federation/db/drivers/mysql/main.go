@@ -4,6 +4,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/stellar/federation/db"
+	"database/sql"
 )
 
 type MysqlDriver struct {
@@ -13,6 +14,10 @@ type MysqlDriver struct {
 func (d *MysqlDriver) Init(url string) (err error) {
 	d.database, err = sqlx.Connect("mysql", url)
 	return
+}
+
+func  (d *MysqlDriver) Exec(query string) (result sql.Result, err error) {
+	return d.database.Exec(query)
 }
 
 func (d *MysqlDriver) GetByStellarAddress(name, query string) (*db.FederationRecord, error) {

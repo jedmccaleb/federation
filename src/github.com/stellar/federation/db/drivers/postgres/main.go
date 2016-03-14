@@ -4,6 +4,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/stellar/federation/db"
+	"database/sql"
 )
 
 type PostgresDriver struct {
@@ -13,6 +14,10 @@ type PostgresDriver struct {
 func (d *PostgresDriver) Init(url string) (err error) {
 	d.database, err = sqlx.Connect("postgres", url)
 	return
+}
+
+func  (d *PostgresDriver) Exec(query string) (result sql.Result, err error) {
+	return d.database.Exec(query)
 }
 
 func (d *PostgresDriver) GetByStellarAddress(name, query string) (*db.FederationRecord, error) {

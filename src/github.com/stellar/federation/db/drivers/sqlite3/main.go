@@ -4,6 +4,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stellar/federation/db"
+	"database/sql"
 )
 
 type Sqlite3Driver struct {
@@ -13,6 +14,10 @@ type Sqlite3Driver struct {
 func (d *Sqlite3Driver) Init(url string) (err error) {
 	d.database, err = sqlx.Connect("sqlite3", url)
 	return
+}
+
+func  (d *Sqlite3Driver) Exec(query string) (result sql.Result, err error) {
+	return d.database.Exec(query)
 }
 
 func (d *Sqlite3Driver) GetByStellarAddress(name, query string) (*db.FederationRecord, error) {
