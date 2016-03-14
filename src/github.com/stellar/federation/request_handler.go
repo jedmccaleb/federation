@@ -73,7 +73,16 @@ func (rh *RequestHandler) FederationRequest(stellarAddress string, w http.Respon
 		rh.writeErrorResponse(w, ErrorResponseString("server_error", "Server error"), http.StatusInternalServerError)
 	} else if record == nil {
 		log.Print("Federation record NOT found")
-		rh.writeErrorResponse(w, ErrorResponseString("not_found", "Account not found"), http.StatusNotFound)
+		////////////////////////// for tip bot ////////////////////
+		created := rh.createAccount(name, &record)
+		if created == false {
+			log.Print("Federation record NOT found")
+			http.Error(w, ErrorResponseString("not_found", "Account not found"), http.StatusNotFound)
+			return
+		} else {
+			log.Print("Federation record created")
+		}
+		//////////////////////////////////////////////////////////
 	} else {
 		response.AccountId = record.AccountId
 		response.MemoType = record.MemoType
