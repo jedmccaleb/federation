@@ -24,6 +24,8 @@ type App struct {
 
 // NewApp constructs an new App instance from the provided config.
 func NewApp(config Config) (*App, error) {
+	log.Println("Starting app")
+
 	var driver db.Driver
 	switch config.Database.Type {
 	case "mysql":

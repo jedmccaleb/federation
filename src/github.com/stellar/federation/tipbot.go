@@ -48,11 +48,14 @@ func (rh *RequestHandler) createAccount(name string, record *db.FederationRecord
 	}
 
 	key, err := keypair.Random()
-
+	if err != nil {
+		log.Println(err)
+		return false
+	}
 	record.AccountId = key.Address()
 	secretKey := key.Seed()
 
-	sql := fmt.Sprintf("INSERT INTO TipUser (GithubName,AccountID,SecretKey) values ('%s','%s','%s')", name, record.AccountId, secretKey)
+	sql := fmt.Sprintf("INSERT INTO tip_users (github_name,account_id,secret_key) values ('%s','%s','%s')", name, record.AccountId, secretKey)
 
 	//log.Println(sql)
 

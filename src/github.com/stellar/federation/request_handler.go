@@ -68,7 +68,8 @@ func (rh *RequestHandler) FederationRequest(stellarAddress string, w http.Respon
 
 	record, err := rh.driver.GetByStellarAddress(name, rh.config.Queries.Federation)
 
-	if err != nil {
+
+	if err != nil && err.Error() != "sql: no rows in result set" {
 		log.Print("Server error: ", err)
 		rh.writeErrorResponse(w, ErrorResponseString("server_error", "Server error"), http.StatusInternalServerError)
 		return

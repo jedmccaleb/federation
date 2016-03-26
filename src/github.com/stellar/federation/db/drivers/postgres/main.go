@@ -12,6 +12,7 @@ type PostgresDriver struct {
 }
 
 func (d *PostgresDriver) Init(url string) (err error) {
+
 	d.database, err = sqlx.Connect("postgres", url)
 	return
 }

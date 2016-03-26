@@ -9,6 +9,9 @@ bumps.  A breaking change will get clearly notified in this log.
 ## [Unreleased]
 
 ### Added
+- Added `EntryType()` to `LedgerEntryChange`
+- Many xdr types learned `Equals()`, a helper to work around deficiencies when comparing xdr unions.
+- The `amount` package learned `MustParse(string)`.
 - `*xdr.Price` learned `String()`.
 - `*xdr.PathPaymentResult` learned `SendAmount()`, a helper to extract how much of the source asset was spent when making a multi-asset payment.
 
